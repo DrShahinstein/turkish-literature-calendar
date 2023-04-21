@@ -1,7 +1,70 @@
-.dead-slot {
-  color: gray;
+.calendar {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 1rem;
+}
+
+.calendar-month-manager {
+  display: flex;
+  align-items: center;
+}
+
+.calendar-month {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0 1rem;
+}
+
+.calendar-month-forward,
+.calendar-month-backward {
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  padding: 0.5rem 0;
+}
+
+.calendar-weeks {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+}
+
+.calendar-week {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-day-slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 3rem;
+  cursor: pointer;
 }
 
 .special-day {
-  color: red;
+  background-color: #ffc107;
+}
+
+.dead-slot {
+  opacity: 0.5;
 }
