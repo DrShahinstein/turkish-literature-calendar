@@ -64,6 +64,8 @@ function App() {
             <button onClick={goNextMonth}>{">"}</button>
           </div>
         </div>
+      </div>
+      <div className="calendar-body">
         <div className="calendar-weekdays">
           <div>Pzt</div>
           <div>Sal</div>
@@ -73,47 +75,43 @@ function App() {
           <div>Cmt</div>
           <div>Paz</div>
         </div>
-      </div>
-      <div className="calendar-body">
-        {range(1, 35)
-          .reduce((acc, day) => {
-            const specialDay = specialDays.find(
-              (d) => d.month === month && d.day === day
-            );
-
-            const daySlot = (
-              <div
-                className={`calendar-day-slot 
+        <div className="calendar-weeks">
+          {range(1, 35)
+            .reduce((acc, day) => {
+              const specialDay = specialDays.find(
+                (d) => d.month === month && d.day === day
+              );
+              const daySlot = (
+                <div
+                  className={`calendar-day-slot 
                 ${specialDay ? "special-day" : ""} 
                 ${day <= daysInMonth ? "" : "dead-slot"}`}
-                onClick={() => handleDayClick(day)}
-                key={shortid.generate()}
-              >
-                {day}
+                  onClick={() => handleDayClick(day)}
+                  key={shortid.generate()}
+                >
+                  {day}
+                </div>
+              );
+              if (acc.length === 0) {
+                return [[daySlot]];
+              }
+              const lastWeekIndex = acc.length - 1;
+              if (acc[lastWeekIndex].length < 7) {
+                return [
+                  ...acc.slice(0, lastWeekIndex),
+                  [...acc[lastWeekIndex], daySlot],
+                ];
+              }
+              return [...acc, [daySlot]];
+            }, [])
+            .map((week, index) => (
+              <div className="calendar-week" key={index}>
+                {week.map((day) => (
+                  <Fragment key={shortid.generate()}>{day}</Fragment>
+                ))}
               </div>
-            );
-
-            if (acc.length === 0) {
-              return [[daySlot]];
-            }
-
-            const lastWeekIndex = acc.length - 1;
-            if (acc[lastWeekIndex].length < 7) {
-              return [
-                ...acc.slice(0, lastWeekIndex),
-                [...acc[lastWeekIndex], daySlot],
-              ];
-            }
-
-            return [...acc, [daySlot]];
-          }, [])
-          .map((week, index) => (
-            <div className="calendar-week" key={index}>
-              {week.map((day) => (
-                <Fragment key={shortid.generate()}>{day}</Fragment>
-              ))}
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
     </div>
   );
