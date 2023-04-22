@@ -28,7 +28,7 @@ function App() {
   const [month, setMonth] = useState(currentMonth);
   const daysInMonth = months[month].days;
   const startDay = new Date(currentYear, month, 1).getDay();
-  const daysBefore = startDay === 0 ? 6 : startDay - 1; // Sunday is 0, but we want Monday to be 0
+  const daysBefore = startDay === 0 ? 6 : startDay - 1;
   const daysAfter = 7 - ((daysBefore + daysInMonth) % 7);
   const dayRangeStart = 1 - daysBefore;
   const dayRangeEnd = daysInMonth + daysAfter;
@@ -93,10 +93,8 @@ function App() {
     );
 
     if (specialDay) {
-      // Do something with the special day information
       console.log(`Clicked on ${specialDay.description}`);
     } else {
-      // Handle click on a regular day
       console.log(`Clicked on day ${day}`);
     }
   };
@@ -134,7 +132,6 @@ function App() {
               ))}
             </div>
           ))}
-          <div></div>
         </div>
       </div>
     </div>
