@@ -76,22 +76,36 @@ function App() {
           <div>Paz</div>
         </div>
         <div className="calendar-weeks">
-          {range(1, 35)
+          {range(1 - currentDate.getDay(), 35)
             .reduce((acc, day) => {
               const specialDay = specialDays.find(
                 (d) => d.month === month && d.day === day
               );
-              const daySlot = (
-                <div
-                  className={`calendar-day-slot 
-                ${specialDay ? "special-day" : ""} 
-                ${day <= daysInMonth ? "" : "dead-slot"}`}
-                  onClick={() => handleDayClick(day)}
-                  key={shortid.generate()}
-                >
-                  {day}
-                </div>
-              );
+              if (day < 1 || !(day <= daysInMonth)) {
+                var daySlot = (
+                  <div
+                    className={`calendar-day-slot dead-slot ${
+                      specialDay ? "special-day" : ""
+                    }`}
+                    onClick={() => handleDayClick(day)}
+                    key={shortid.generate()}
+                  >
+                    {day}
+                  </div>
+                );
+              } else {
+                var daySlot = (
+                  <div
+                    className={`calendar-day-slot ${
+                      specialDay ? "special-day" : ""
+                    }`}
+                    onClick={() => handleDayClick(day)}
+                    key={shortid.generate()}
+                  >
+                    {day}
+                  </div>
+                );
+              }
               if (acc.length === 0) {
                 return [[daySlot]];
               }
