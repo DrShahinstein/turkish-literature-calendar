@@ -27,6 +27,57 @@ function App() {
   };
   const [month, setMonth] = useState(currentMonth);
   const daysInMonth = months[month].days;
+  const startDay = new Date(currentYear, month, 1).getDay();
+  const daysBefore = startDay === 0 ? 6 : startDay - 1; // Sunday is 0, but we want Monday to be 0
+  const daysAfter = 7 - ((daysBefore + daysInMonth) % 7);
+  const dayRangeStart = 1 - daysBefore;
+  const dayRangeEnd = daysInMonth + daysAfter;
+
+  const weeks = range(dayRangeStart, dayRangeEnd).reduce((acc, day) => {
+    const specialDay = specialDays.find(
+      (d) => d.month === month && d.day === day
+    );
+    if (day < 1 || !(day <= daysInMonth)) {
+      var daySlot = (
+        <div
+          className={`calendar-day-slot dead-slot ${
+            specialDay ? "special-day" : ""
+          }`}
+          onClick={() => handleDayClick(day)}
+          key={shortid.generate()}
+        >
+          {day}
+        </div>
+      );
+    } else {
+      var daySlot = (
+        <div
+          className={`calendar-day-slot ${specialDay ? "special-day" : ""}`}
+          onClick={() => handleDayClick(day)}
+          key={shortid.generate()}
+        >
+          {day}
+        </div>
+      );
+    }
+    if (acc.length === 0) {
+      return [[daySlot]];
+    }
+    const lastWeekIndex = acc.length - 1;
+    if (acc[lastWeekIndex].length < 7) {
+      return [...acc.slice(0, lastWeekIndex), [...acc[lastWeekIndex], daySlot]];
+    }
+    return [...acc, [daySlot]];
+  }, []);
+  const lastWeek = weeks[weeks.length - 1];
+  if (lastWeek.length < 7) {
+    const deadSlots = range(0, 6 - lastWeek.length).map((day) => (
+      <div className="calendar-day-slot dead-slot" key={shortid.generate()}>
+        {day}
+      </div>
+    ));
+    weeks[weeks.length - 1] = [...lastWeek, ...deadSlots];
+  }
 
   const goPreviousMonth = () => {
     setMonth((prevMonth) => prevMonth - 1);
@@ -76,55 +127,14 @@ function App() {
           <div>Paz</div>
         </div>
         <div className="calendar-weeks">
-          {range(1 - currentDate.getDay(), 35)
-            .reduce((acc, day) => {
-              const specialDay = specialDays.find(
-                (d) => d.month === month && d.day === day
-              );
-              if (day < 1 || !(day <= daysInMonth)) {
-                var daySlot = (
-                  <div
-                    className={`calendar-day-slot dead-slot ${
-                      specialDay ? "special-day" : ""
-                    }`}
-                    onClick={() => handleDayClick(day)}
-                    key={shortid.generate()}
-                  >
-                    {day}
-                  </div>
-                );
-              } else {
-                var daySlot = (
-                  <div
-                    className={`calendar-day-slot ${
-                      specialDay ? "special-day" : ""
-                    }`}
-                    onClick={() => handleDayClick(day)}
-                    key={shortid.generate()}
-                  >
-                    {day}
-                  </div>
-                );
-              }
-              if (acc.length === 0) {
-                return [[daySlot]];
-              }
-              const lastWeekIndex = acc.length - 1;
-              if (acc[lastWeekIndex].length < 7) {
-                return [
-                  ...acc.slice(0, lastWeekIndex),
-                  [...acc[lastWeekIndex], daySlot],
-                ];
-              }
-              return [...acc, [daySlot]];
-            }, [])
-            .map((week, index) => (
-              <div className="calendar-week" key={index}>
-                {week.map((day) => (
-                  <Fragment key={shortid.generate()}>{day}</Fragment>
-                ))}
-              </div>
-            ))}
+          {weeks.map((week, index) => (
+            <div className="calendar-week" key={index}>
+              {week.map((day) => (
+                <Fragment key={shortid.generate()}>{day}</Fragment>
+              ))}
+            </div>
+          ))}
+          <div></div>
         </div>
       </div>
     </div>
