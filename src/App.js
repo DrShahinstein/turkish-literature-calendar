@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from "react";
+import InfoBox from "./components/InfoBox/InfoBox";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { range, capitalize } from "./calendar-utilities";
 import shortid from "shortid";
@@ -26,6 +27,7 @@ function App() {
     10: { name: "kasım", days: 30 },
     11: { name: "aralık", days: 31 },
   };
+  const [infoBox, setInfoBox] = useState(false);
   const [month, setMonth] = useState(currentMonth);
   const daysInMonth = months[month].days;
   const startDay = new Date(currentYear, month, 1).getDay();
@@ -107,52 +109,56 @@ function App() {
     );
 
     if (specialDay) {
-      console.log(`Clicked on ${specialDay.description}`);
-    } else {
-      console.log(`Clicked on day ${day}`);
+      setInfoBox({
+        title: specialDay.title,
+        description: specialDay.description,
+      });
     }
   };
 
   return (
-    <div className="calendar">
-      <div className="calendar-header">
-        <div className="calendar-month-manager">
-          <div className="calendar-month-forward">
-            <button onClick={goPreviousMonth}>
-              <AiFillCaretLeft />
-            </button>
-          </div>
-          <div className="calendar-month">
-            <h1>{capitalize(months[month].name)}</h1>
-          </div>
-          <div className="calendar-month-backward">
-            <button onClick={goNextMonth}>
-              <AiFillCaretRight />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="calendar-body">
-        <div className="calendar-weekdays">
-          <div>Pzt</div>
-          <div>Sal</div>
-          <div>Çar</div>
-          <div>Per</div>
-          <div>Cum</div>
-          <div>Cmt</div>
-          <div>Paz</div>
-        </div>
-        <div className="calendar-weeks">
-          {weeks.map((week, index) => (
-            <div className="calendar-week" key={index}>
-              {week.map((day) => (
-                <Fragment key={shortid.generate()}>{day}</Fragment>
-              ))}
+    <>
+      <div className="calendar">
+        <div className="calendar-header">
+          <div className="calendar-month-manager">
+            <div className="calendar-month-forward">
+              <button onClick={goPreviousMonth}>
+                <AiFillCaretLeft />
+              </button>
             </div>
-          ))}
+            <div className="calendar-month">
+              <h1>{capitalize(months[month].name)}</h1>
+            </div>
+            <div className="calendar-month-backward">
+              <button onClick={goNextMonth}>
+                <AiFillCaretRight />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="calendar-body">
+          <div className="calendar-weekdays">
+            <div>Pzt</div>
+            <div>Sal</div>
+            <div>Çar</div>
+            <div>Per</div>
+            <div>Cum</div>
+            <div>Cmt</div>
+            <div>Paz</div>
+          </div>
+          <div className="calendar-weeks">
+            {weeks.map((week, index) => (
+              <div className="calendar-week" key={index}>
+                {week.map((day) => (
+                  <Fragment key={shortid.generate()}>{day}</Fragment>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      {infoBox && <InfoBox setInfoBox={setInfoBox} {...infoBox} />}
+    </>
   );
 }
 
