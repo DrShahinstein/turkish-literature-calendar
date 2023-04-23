@@ -1,7 +1,8 @@
 import React, { useState, Fragment } from "react";
-import specialDays from "./specialDays.json";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { range, capitalize } from "./calendar-utilities";
 import shortid from "shortid";
+import specialDays from "./specialDays.json";
 import "./App.css";
 
 function App() {
@@ -104,13 +105,17 @@ function App() {
       <div className="calendar-header">
         <div className="calendar-month-manager">
           <div className="calendar-month-forward">
-            <button onClick={goPreviousMonth}>{"<"}</button>
+            <button onClick={goPreviousMonth}>
+              <AiFillCaretLeft />
+            </button>
           </div>
           <div className="calendar-month">
             <h1>{capitalize(months[month].name)}</h1>
           </div>
           <div className="calendar-month-backward">
-            <button onClick={goNextMonth}>{">"}</button>
+            <button onClick={goNextMonth}>
+              <AiFillCaretRight />
+            </button>
           </div>
         </div>
       </div>
