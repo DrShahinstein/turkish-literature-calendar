@@ -84,11 +84,21 @@ function App() {
   }
 
   const goPreviousMonth = () => {
-    setMonth((prevMonth) => prevMonth - 1);
+    setMonth((prevMonth) => {
+      if (prevMonth === 0) {
+        return 11;
+      }
+      return prevMonth - 1;
+    });
   };
 
   const goNextMonth = () => {
-    setMonth((nextMonth) => nextMonth + 1);
+    setMonth((nextMonth) => {
+      if (nextMonth === 11) {
+        return 0;
+      }
+      return nextMonth + 1;
+    });
   };
 
   const handleDayClick = (day) => {
