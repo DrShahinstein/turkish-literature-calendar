@@ -35,6 +35,7 @@ function App() {
   const dayRangeEnd = daysInMonth + daysAfter;
 
   const weeks = range(dayRangeStart, dayRangeEnd).reduce((acc, day) => {
+    const isToday = day === currentDate.getDate() && month === currentMonth;
     const specialDay = specialDays.find(
       (d) => d.month === month && d.day === day
     );
@@ -53,7 +54,9 @@ function App() {
     } else {
       var daySlot = (
         <div
-          className={`calendar-day-slot ${specialDay ? "special-day" : ""}`}
+          className={`calendar-day-slot 
+           ${specialDay ? "special-day" : ""} 
+           ${isToday ? "today" : ""}`}
           onClick={() => handleDayClick(day)}
           key={shortid.generate()}
         >
