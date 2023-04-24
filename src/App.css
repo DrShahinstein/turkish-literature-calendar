@@ -86,11 +86,9 @@
 }
 
 .special-day {
-  background-color: #ffc300 !important;
   transition: background-color 0.3s ease;
 }
 .special-day:hover {
-  background-color: #ffc300;
   opacity: 0.8;
 }
 
