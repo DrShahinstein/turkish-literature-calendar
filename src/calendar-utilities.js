@@ -9,4 +9,12 @@ const capitalize = (word) => {
   return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
 };
 
-export { range, capitalize };
+const findSpecialDay = (specialDays, targetMonth, targetDay) => {
+  return specialDays
+    .map((arr) =>
+      arr.find((d) => d.month === targetMonth && d.day === targetDay)
+    )
+    .find((d) => d !== undefined);
+};
+
+export { range, capitalize, findSpecialDay };
