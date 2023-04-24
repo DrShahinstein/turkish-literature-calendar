@@ -14,12 +14,15 @@
 .infobox {
   width: 80%;
   max-width: 600px;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 5px;
-  background-color: #fff;
-  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+  background-color: #f2f2f2;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   padding: 1rem;
   margin-bottom: 1rem;
+  font-family: Arial, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
 }
 
 .infobox-header {
@@ -39,6 +42,7 @@
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
+  color: #888;
 }
 
 .close-button:hover {
@@ -46,18 +50,16 @@
 }
 
 .infobox-content p {
-  font-size: 1.2rem;
   margin: 0;
-  line-height: 1.5;
 }
 
 @keyframes slide-up {
   from {
-    margin-bottom: 0;
+    transform: translateY(100%);
     opacity: 0;
   }
   to {
-    margin-bottom: 1rem;
+    transform: translateY(0);
     opacity: 1;
   }
 }
