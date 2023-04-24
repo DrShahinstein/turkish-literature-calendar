@@ -1,7 +1,34 @@
 [
-  {
-    "month": 4,
-    "day": 6,
-    "description": "Test"
-  }
+  [
+    {
+      "title": "Array1-1",
+      "description": "First To Be Highlighted Day of Array1",
+      "month": 4,
+      "day": 6,
+      "higlight_color": "orange"
+    },
+    {
+      "title": "Array1-2",
+      "description": "Second To Be Highlighted Day of Array2",
+      "month": 3,
+      "day": 25,
+      "higlight_color": "yellow"
+    }
+  ],
+  [
+    {
+      "title": "Array2-1",
+      "description": "First To Be Highlighted Day of Array2",
+      "month": 4,
+      "day": 9,
+      "higlight_color": "purple"
+    },
+    {
+      "title": "Array2-2",
+      "description": "First To Be Highlighted Day of Array2",
+      "month": 3,
+      "day": 27,
+      "higlight_color": "pink"
+    }
+  ]
 ]
