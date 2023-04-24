@@ -1,7 +1,7 @@
 import React, { useState, Fragment } from "react";
 import InfoBox from "./components/InfoBox/InfoBox";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-import { range, capitalize } from "./calendar-utilities";
+import { range, capitalize, findSpecialDay } from "./calendar-utilities";
 import shortid from "shortid";
 import specialDays from "./specialDays.json";
 import "./App.css";
@@ -35,30 +35,26 @@ function App() {
   const daysAfter = 7 - ((daysBefore + daysInMonth) % 7);
   const dayRangeStart = 1 - daysBefore;
   const dayRangeEnd = daysInMonth + daysAfter;
-
   const weeks = range(dayRangeStart, dayRangeEnd).reduce((acc, day) => {
+    var daySlot;
     const isToday = day === currentDate.getDate() && month === currentMonth;
-    const specialDay = specialDays.find(
-      (d) => d.month === month && d.day === day
-    );
+    const specialDay = findSpecialDay(specialDays, month, day);
+
     if (day < 1 || !(day <= daysInMonth)) {
-      var daySlot = (
-        <div
-          className={`calendar-day-slot dead-slot ${
-            specialDay ? "special-day" : ""
-          }`}
-          onClick={() => handleDayClick(day)}
-          key={shortid.generate()}
-        >
+      daySlot = (
+        <div className={`calendar-day-slot dead-slot`} key={shortid.generate()}>
           {day}
         </div>
       );
     } else {
-      var daySlot = (
+      daySlot = (
         <div
           className={`calendar-day-slot 
-           ${specialDay ? "special-day" : ""} 
+           ${specialDay ? "special-day" : ""}  
            ${isToday ? "today" : ""}`}
+          style={
+            specialDay ? { backgroundColor: specialDay.higlight_color } : {}
+          }
           onClick={() => handleDayClick(day)}
           key={shortid.generate()}
         >
@@ -66,9 +62,11 @@ function App() {
         </div>
       );
     }
+
     if (acc.length === 0) {
       return [[daySlot]];
     }
+
     const lastWeekIndex = acc.length - 1;
     if (acc[lastWeekIndex].length < 7) {
       return [...acc.slice(0, lastWeekIndex), [...acc[lastWeekIndex], daySlot]];
@@ -104,10 +102,7 @@ function App() {
   };
 
   const handleDayClick = (day) => {
-    const specialDay = specialDays.find(
-      (d) => d.month === month && d.day === day
-    );
-
+    const specialDay = findSpecialDay(specialDays, month, day);
     if (specialDay) {
       setInfoBox({
         title: specialDay.title,
