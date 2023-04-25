@@ -1,10 +1,12 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import InfoBox from "./components/InfoBox/InfoBox";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { range, capitalize, findSpecialDay } from "./calendar-utilities";
+import axios from "axios";
 import shortid from "shortid";
-import specialDays from "./specialDays.json";
 import "./App.css";
+
+const API = process.env.REACT_APP_DJANGO_API;
 
 function App() {
   const currentDate = new Date();
@@ -29,6 +31,7 @@ function App() {
   };
   const [infoBox, setInfoBox] = useState(false);
   const [month, setMonth] = useState(currentMonth);
+  const [specialDays, setSpecialDays] = useState([]);
   const daysInMonth = months[month].days;
   const startDay = new Date(currentYear, month, 1).getDay();
   const daysBefore = startDay === 0 ? 6 : startDay - 1;
@@ -82,6 +85,18 @@ function App() {
     ));
     weeks[weeks.length - 1] = [...lastWeek, ...deadSlots];
   }
+
+  useEffect(() => {
+    const getSpecialDays = async () => {
+      try {
+        const response = await axios.get(`${API}/special_days/`);
+        setSpecialDays(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getSpecialDays();
+  }, []);
 
   const goPreviousMonth = () => {
     setMonth((prevMonth) => {
