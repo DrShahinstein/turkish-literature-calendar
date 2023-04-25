@@ -12,7 +12,9 @@ const capitalize = (word) => {
 const findSpecialDay = (specialDays, targetMonth, targetDay) => {
   return specialDays
     .map((arr) =>
-      arr.find((d) => d.month === targetMonth && d.day === targetDay)
+      arr.special_days.find(
+        (d) => d.month === targetMonth && d.day === targetDay
+      )
     )
     .find((d) => d !== undefined);
 };
