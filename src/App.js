@@ -1,90 +1,17 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect } from "react";
+import Weeks from "./components/Weeks";
 import InfoBox from "./components/InfoBox/InfoBox";
+import { currentMonth, months, capitalize } from "./calendar-utilities";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
-import { range, capitalize, findSpecialDay } from "./calendar-utilities";
 import axios from "axios";
-import shortid from "shortid";
 import "./App.css";
 
 const API = process.env.REACT_APP_DJANGO_API;
 
 function App() {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getMonth();
-  const currentYear = currentDate.getFullYear();
-  const isLeapYear =
-    currentYear % 4 === 0 &&
-    (currentYear % 100 !== 0 || currentYear % 400 === 0);
-  const months = {
-    0: { name: "ocak", days: 31 },
-    1: { name: "şubat", days: isLeapYear ? 29 : 28 },
-    2: { name: "mart", days: 31 },
-    3: { name: "nisan", days: 30 },
-    4: { name: "mayıs", days: 31 },
-    5: { name: "haziran", days: 30 },
-    6: { name: "temmuz", days: 31 },
-    7: { name: "ağustos", days: 31 },
-    8: { name: "eylül", days: 30 },
-    9: { name: "ekim", days: 31 },
-    10: { name: "kasım", days: 30 },
-    11: { name: "aralık", days: 31 },
-  };
   const [infoBox, setInfoBox] = useState(false);
   const [month, setMonth] = useState(currentMonth);
   const [specialDays, setSpecialDays] = useState([]);
-  const daysInMonth = months[month].days;
-  const startDay = new Date(currentYear, month, 1).getDay();
-  const daysBefore = startDay === 0 ? 6 : startDay - 1;
-  const daysAfter = 7 - ((daysBefore + daysInMonth) % 7);
-  const dayRangeStart = 1 - daysBefore;
-  const dayRangeEnd = daysInMonth + daysAfter;
-  const weeks = range(dayRangeStart, dayRangeEnd).reduce((acc, day) => {
-    var daySlot;
-    const isToday = day === currentDate.getDate() && month === currentMonth;
-    const specialDay = findSpecialDay(specialDays, month, day);
-
-    if (day < 1 || !(day <= daysInMonth)) {
-      daySlot = (
-        <div className={`calendar-day-slot dead-slot`} key={shortid.generate()}>
-          {day}
-        </div>
-      );
-    } else {
-      daySlot = (
-        <div
-          className={`calendar-day-slot 
-           ${specialDay ? "special-day" : ""}  
-           ${isToday ? "today" : ""}`}
-          style={
-            specialDay ? { backgroundColor: specialDay.higlight_color } : {}
-          }
-          onClick={() => handleDayClick(day)}
-          key={shortid.generate()}
-        >
-          {day}
-        </div>
-      );
-    }
-
-    if (acc.length === 0) {
-      return [[daySlot]];
-    }
-
-    const lastWeekIndex = acc.length - 1;
-    if (acc[lastWeekIndex].length < 7) {
-      return [...acc.slice(0, lastWeekIndex), [...acc[lastWeekIndex], daySlot]];
-    }
-    return [...acc, [daySlot]];
-  }, []);
-  const lastWeek = weeks[weeks.length - 1];
-  if (lastWeek.length < 7) {
-    const deadSlots = range(0, 6 - lastWeek.length).map((day) => (
-      <div className="calendar-day-slot dead-slot" key={shortid.generate()}>
-        {day}
-      </div>
-    ));
-    weeks[weeks.length - 1] = [...lastWeek, ...deadSlots];
-  }
 
   useEffect(() => {
     const getSpecialDays = async () => {
@@ -114,16 +41,6 @@ function App() {
       }
       return nextMonth + 1;
     });
-  };
-
-  const handleDayClick = (day) => {
-    const specialDay = findSpecialDay(specialDays, month, day);
-    if (specialDay) {
-      setInfoBox({
-        title: specialDay.title,
-        description: specialDay.description,
-      });
-    }
   };
 
   return (
@@ -157,13 +74,11 @@ function App() {
             <div>Paz</div>
           </div>
           <div className="calendar-weeks">
-            {weeks.map((week, index) => (
-              <div className="calendar-week" key={index}>
-                {week.map((day) => (
-                  <Fragment key={shortid.generate()}>{day}</Fragment>
-                ))}
-              </div>
-            ))}
+            <Weeks
+              month={month}
+              specialDays={specialDays}
+              setInfoBox={setInfoBox}
+            />
           </div>
         </div>
       </div>
