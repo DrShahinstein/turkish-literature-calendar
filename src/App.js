@@ -14,15 +14,10 @@ function App() {
   const [specialDays, setSpecialDays] = useState([]);
 
   useEffect(() => {
-    const getSpecialDays = async () => {
-      try {
-        const response = await axios.get(`${API}/special_days/`);
-        setSpecialDays(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    getSpecialDays();
+    axios
+      .get(`${API}/special_days/`)
+      .then((res) => setSpecialDays(res.data))
+      .catch((err) => console.error(err));
   }, []);
 
   const goPreviousMonth = () => {
