@@ -34,7 +34,7 @@ export default function Weeks({ specialDays, setInfoBox, month }) {
                ${specialDay ? "special-day" : ""}  
                ${isToday ? "today" : ""}`}
           style={
-            specialDay ? { backgroundColor: specialDay.higlight_color } : {}
+            specialDay ? { backgroundColor: specialDay.highlight_color } : {}
           }
           onClick={() => handleDayClick(day)}
           key={shortid.generate()}
