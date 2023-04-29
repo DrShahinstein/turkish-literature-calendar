@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "Backend side of turkish-literature-calendar"
 authors = ["DrShahinstein <1taylanozturk@protonmail.com>"]
 license = "GNU General Public License"
-readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
