@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { AiFillCloseCircle } from "react-icons/ai";
 import "./infobox.css";
 
-export default function InfoBox({ title, description, setInfoBox }) {
+export default function InfoBox({ title, description, year, setInfoBox }) {
   return (
     <motion.div
       className="infobox-container"
@@ -24,6 +24,9 @@ export default function InfoBox({ title, description, setInfoBox }) {
         </div>
         <div className="infobox-content">
           <p>{description}</p>
+        </div>
+        <div className="infobox-year">
+          <p>{year}</p>
         </div>
       </div>
     </motion.div>
