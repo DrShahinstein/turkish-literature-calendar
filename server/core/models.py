@@ -13,6 +13,7 @@ class SpecialDay(models.Model):
         Category, on_delete=models.CASCADE, related_name='special_days')
     title = models.CharField(max_length=100)
     description = models.TextField()
+    year = models.PositiveIntegerField(default=1900)
     month = models.PositiveSmallIntegerField()
     day = models.PositiveSmallIntegerField()
     highlight_color = models.CharField(max_length=100)
