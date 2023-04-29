@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+import shortid from "shortid";
 import {
   range,
   findSpecialDay,
@@ -6,7 +7,6 @@ import {
   currentMonth,
   currentYear,
 } from "../calendar-utilities";
-import shortid from "shortid";
 
 export default function Weeks({ specialDays, setInfoBox, month }) {
   const currentDate = new Date();
@@ -70,6 +70,7 @@ export default function Weeks({ specialDays, setInfoBox, month }) {
       setInfoBox({
         title: specialDay.title,
         description: specialDay.description,
+        year: specialDay.year,
       });
     }
   };
