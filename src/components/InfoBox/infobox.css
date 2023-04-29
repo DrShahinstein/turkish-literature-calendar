@@ -8,7 +8,6 @@
   align-items: flex-end;
   padding-bottom: 1rem;
   overflow: hidden;
-  animation: slide-up 0.5s ease forwards;
 }
 
 .infobox {
@@ -51,15 +50,4 @@
 
 .infobox-content p {
   margin: 0;
-}
-
-@keyframes slide-up {
-  from {
-    transform: translateY(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
