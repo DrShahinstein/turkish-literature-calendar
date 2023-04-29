@@ -9,15 +9,16 @@ The Turkish Literature Calendar is actually a web application containing a calen
 
 ## Technologies
 
-| Technology                                                           | Version |
-| -------------------------------------------------------------------- | ------- |
-| [react](https://reactjs.org/)                                        | ^18.2.0 |
-| [shortid](https://github.com/dylang/shortid)                         | ^2.2.16 |
-| [python](https://www.python.org/)                                    | ^3.10   |
-| [django](https://www.djangoproject.com/)                             | ^4.2    |
-| [django rest framework](https://www.django-rest-framework.org/)      | ^3.14.0 |
-| [django cors headers](https://pypi.org/project/django-cors-headers/) | ^3.14.0 |
-| [python-decouple](https://pypi.org/project/python-decouple/)         | ^3.8    |
+| Technology                                                           | Version  |
+| -------------------------------------------------------------------- | -------- |
+| [react](https://reactjs.org/)                                        | ^18.2.0  |
+| [framer-motion](https://www.framer.com/motion/)                      | ^10.12.4 |
+| [shortid](https://github.com/dylang/shortid)                         | ^2.2.16  |
+| [python](https://www.python.org/)                                    | ^3.10    |
+| [django](https://www.djangoproject.com/)                             | ^4.2     |
+| [django rest framework](https://www.django-rest-framework.org/)      | ^3.14.0  |
+| [django cors headers](https://pypi.org/project/django-cors-headers/) | ^3.14.0  |
+| [python-decouple](https://pypi.org/project/python-decouple/)         | ^3.8     |
 
 ## Features
 
