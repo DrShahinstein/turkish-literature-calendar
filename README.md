@@ -1,5 +1,7 @@
 # Turkish Literature Calendar
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/5f475aec-4400-44da-b419-011a518ccb0e/deploy-status)](https://app.netlify.com/sites/edebiyat-takvimi/deploys)
+
 The Turkish Literature Calendar is actually a web application containing a calendar allowing users to highlight specific days based on their interests and view them nicely. With this application, users can easily determine which days are significant for them and view. The why this project is named Turkish Literature Calendar is that I've developed this project for my teacher's project in the school so I use this with the purpose of Turkish Literature.
 
 ## Requirements
