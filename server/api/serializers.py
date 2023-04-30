@@ -3,6 +3,11 @@ from core.models import Category, SpecialDay
 
 
 class SpecialDaySerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['month'] = instance.month - 1
+        return representation
+
     class Meta:
         model = SpecialDay
         fields = ('title', 'description', 'month',
